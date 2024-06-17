@@ -21,7 +21,7 @@ const spaceGrotesk = Space_Grotesk ({
 
 export const metadata: Metadata = {
   title: 'DevFlow',
-  description: 'A community driven platform for asking asn answering programming questions. Get help, share knowledge, and collaborate with devs.',
+  description: 'A community driven platform for asking and answering programming questions. Get help, share knowledge, and collaborate with devs.',
   icons: {
     icon: '/assets/images/site-logo.svg',
   }
