@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import { Input } from '@/components/ui/input'
 import Image from 'next/image'
 import React from 'react'
@@ -17,7 +18,7 @@ const GlobalSearch = () => {
                 type='text'
                 placeholder='Search Globally'
                 value=''
-                className='paragraph-regular no-focus placeholder background-light800_darkgradient border-none shadow-none outline-none'
+                className='paragraph-regular no-focus placeholder:dark:text-light-700 background-light800_darkgradient border-none shadow-none outline-none'
             />
         </div>
     </div>
