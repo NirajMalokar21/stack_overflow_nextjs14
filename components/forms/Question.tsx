@@ -20,16 +20,24 @@ import { questionSchema } from '@/lib/validations'
 import { useTheme } from '@/context/ThemeProvider'
 import { Badge } from '../ui/badge'
 import Image from 'next/image'
-import RenderTag from '../shared/RenderTag'
+import { createQuestion } from '@/lib/actions/question.action'
+import { useRouter, usePathname } from 'next/navigation'
 
 const type: any = 'create'
 
-const Question = () => {
+interface Props {
+  mongoUserId: string
+}
+
+const Question = ({ mongoUserId }: Props) => {
   const { mode } = useTheme();
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const router = useRouter()
+  const pathname = usePathname()
+
   const editorRef = useRef(null)
    // 1. Define your form.
-   const form = useForm<z.infer<typeof questionSchema>>({
+  const form = useForm<z.infer<typeof questionSchema>>({
     resolver: zodResolver(questionSchema),
     defaultValues: {
       title: "",
@@ -39,15 +47,21 @@ const Question = () => {
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof questionSchema>) {
+  async function onSubmit(values: z.infer<typeof questionSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     setIsSubmitting(true)
     try{
       // Make an async call to your API to create a question
       // contain all form data
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId)
+      })
 
-      // navigate to home page
+      router.push('/')
     } catch(error) {
       
     } finally {
@@ -124,6 +138,8 @@ const Question = () => {
                   <Editor
                     apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
                     onInit={(_evt, editor) => editorRef.current = editor}
+                    onBlur={field.onBlur}
+                    onEditorChange={(content) => field.onChange(content)}
                     initialValue="<p>This is the initial content of the editor.</p>"
                     init={{
                       height: 350,
