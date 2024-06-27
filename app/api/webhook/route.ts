@@ -8,7 +8,6 @@ import { NextResponse } from 'next/server'
 export async function POST(req: Request) {
   console.log('POST req is being hit')
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
-  // TODO: ADD SECRET TO ENV.LOCAL FILE
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET
 
   if (!WEBHOOK_SECRET) {
@@ -52,11 +51,13 @@ export async function POST(req: Request) {
   }
 
   // Do something with the payload
-  console.log(evt.type)
+  console.log(evt)
   const eventType = evt.type;
   if(eventType === 'user.created') {
       const { id, email_addresses, image_url, username, first_name, last_name } = evt.data;
+      console.log(evt.data)
       console.log('Adding user')
+      console.log(first_name)
       const mongoUser = await createUser({
           clerkId: id,
           name: `${first_name}${last_name ? ` ${last_name}`: ''}`,
@@ -69,6 +70,7 @@ export async function POST(req: Request) {
   }
   else if(eventType === 'user.updated') {
   const { id, email_addresses, image_url, username, first_name, last_name } = evt.data;
+      console.log('Updating user local')
       const mongoUser = await updateUser({
           clerkId: id,
           updateData: {
