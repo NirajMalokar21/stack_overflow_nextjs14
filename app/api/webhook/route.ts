@@ -55,7 +55,7 @@ export async function POST(req: Request) {
   const eventType = evt.type;
     if(eventType === 'user.created') {
         const { id, email_addresses, image_url, username, first_name, last_name } = evt.data;
-
+        console.log('Adding user')
         const mongoUser = await createUser({
             clerkId: id,
             name: `${first_name}${last_name ? ` ${last_name}`: ''}`,
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
             username: username!,
             picture: image_url
         })
-        console.log('user created')
+        console.log('user added')
         return NextResponse.json({ message: 'OK', user: mongoUser})
     }
     else if(eventType === 'user.updated') {
