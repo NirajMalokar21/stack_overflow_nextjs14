@@ -58,7 +58,8 @@ const Question = ({ mongoUserId }: Props) => {
         title: values.title,
         content: values.explanation,
         tags: values.tags,
-        author: JSON.parse(mongoUserId)
+        author: JSON.parse(mongoUserId),
+        path: pathname
       })
 
       router.push('/')
@@ -137,7 +138,10 @@ const Question = ({ mongoUserId }: Props) => {
                 <FormControl className='mt-3.5'>
                   <Editor
                     apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
-                    onInit={(_evt, editor) => editorRef.current = editor}
+                    onInit={(_evt, editor) => {
+                      // @ts-ignore
+                      editorRef.current = editor
+                    }}
                     onBlur={field.onBlur}
                     onEditorChange={(content) => field.onChange(content)}
                     initialValue="<p>This is the initial content of the editor.</p>"
