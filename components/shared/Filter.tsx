@@ -25,7 +25,7 @@ const Filter = ( {filters, otherClasses, containerClasses}: CustomFilterTypes ) 
         <div className={`relative ${containerClasses}`}>
             <Select>
                 <SelectTrigger className={`background-light800_dark300 text-dark500_light700 relative
-                    flex px-5 py-2.5 ${otherClasses}`}>
+                    flex px-5 py-2.5 dark:border-none ${otherClasses}`}>
                     <div className='line-clamp-1 flex-1 text-left'>
                         <SelectValue placeholder="Select a filter" />
                     </div>    
@@ -37,6 +37,7 @@ const Filter = ( {filters, otherClasses, containerClasses}: CustomFilterTypes ) 
                             return(
                                 <SelectItem 
                                     key={filter.value}
+                                    className='hover:bg-light-800 hover:dark:bg-slate-800'
                                     value={filter.value}>
                                         {filter.name}</SelectItem>
                             )
