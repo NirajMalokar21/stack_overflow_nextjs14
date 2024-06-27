@@ -54,44 +54,44 @@ export async function POST(req: Request) {
   // Do something with the payload
   console.log(evt.type)
   const eventType = evt.type;
-    if(eventType === 'user.created') {
-        const { id, email_addresses, image_url, username, first_name, last_name } = evt.data;
-        console.log('Adding user')
-        const mongoUser = await createUser({
-            clerkId: id,
-            name: `${first_name}${last_name ? ` ${last_name}`: ''}`,
-            email: email_addresses[0].email_address,
-            username: username!,
-            picture: image_url
-        })
-        console.log('user added')
-        return NextResponse.json({ message: 'OK', user: mongoUser})
-    }
-    else if(eventType === 'user.updated') {
-    const { id, email_addresses, image_url, username, first_name, last_name } = evt.data;
-        const mongoUser = await updateUser({
-            clerkId: id,
-            updateData: {
-                name: `${first_name}${last_name ? ` ${last_name} `: ''}`,
-                email: email_addresses[0].email_address,
-                username: username!,
-                picture: image_url
-            },
-            path: `path/${id}`
-            
-        })
-        console.log('user updated')
-        return NextResponse.json({ message: 'OK', user: mongoUser})
-    }
+  if(eventType === 'user.created') {
+      const { id, email_addresses, image_url, username, first_name, last_name } = evt.data;
+      console.log('Adding user')
+      const mongoUser = await createUser({
+          clerkId: id,
+          name: `${first_name}${last_name ? ` ${last_name}`: ''}`,
+          email: email_addresses[0].email_address,
+          username: username!,
+          picture: image_url
+      })
+      console.log('user added')
+      return NextResponse.json({ message: 'OK', user: mongoUser})
+  }
+  else if(eventType === 'user.updated') {
+  const { id, email_addresses, image_url, username, first_name, last_name } = evt.data;
+      const mongoUser = await updateUser({
+          clerkId: id,
+          updateData: {
+              name: `${first_name}${last_name ? ` ${last_name} `: ''}`,
+              email: email_addresses[0].email_address,
+              username: username!,
+              picture: image_url
+          },
+          path: `path/${id}`
+          
+      })
+      console.log('user updated')
+      return NextResponse.json({ message: 'OK', user: mongoUser})
+  }
 
-    if(eventType === 'user.deleted'){
-        const { id } = evt.data;
-        const deletedUser = await deleteUser({
-            clerkId: id
-        })
-        console.log('user deleted')
-        return NextResponse.json({ message: 'OK', user: deletedUser})
-    }
+  if(eventType === 'user.deleted'){
+      const { id } = evt.data;
+      const deletedUser = await deleteUser({
+          clerkId: id
+      })
+      console.log('user deleted')
+      return NextResponse.json({ message: 'OK', user: deletedUser})
+  }
 
   
 
