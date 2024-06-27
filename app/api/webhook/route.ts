@@ -6,7 +6,7 @@ import { createUser, deleteUser, updateUser } from '@/lib/actions/user.action'
 import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
-
+  console.log('POST req is being hit')
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
   // TODO: ADD SECRET TO ENV.LOCAL FILE
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET
@@ -69,7 +69,6 @@ export async function POST(req: Request) {
     }
     else if(eventType === 'user.updated') {
     const { id, email_addresses, image_url, username, first_name, last_name } = evt.data;
-
         const mongoUser = await updateUser({
             clerkId: id,
             updateData: {
