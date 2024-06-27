@@ -46,9 +46,15 @@ const QuestionCard = ( {
         ))}
       </div>
       <div className="flex flex-row justify-between gap-3">
-        <div className='text-dark400_light800'>
-          {user.name} <span className='small-medium'>{getTimeStamp(createdAt)}</span>
-        </div>
+          <Metric 
+            imgUrl={user.picture}
+            alt="user"
+            value={user.name}
+            title={` - asked ${getTimeStamp(createdAt)}`}
+            href={`/profile/${user._id}`}
+            isAuthor
+            textStyles="body-medium text-dark400_light700"
+          />
         <div className='flex flex-row gap-3'>
           <Metric 
             imgUrl='/assets/icons/like.svg'
