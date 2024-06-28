@@ -3,6 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import RenderTag from '../shared/RenderTag'
+import { getTopInteractedTags } from '@/lib/actions/tag.action'
+import { Badge } from '../ui/badge'
 
 interface UserProps {
     user: {
@@ -10,24 +12,21 @@ interface UserProps {
         clerkId: string,
         name: string,
         username: string,
-        tags: {
-            _id: number,
-            name: string,
-          }[],
         picture: string,
     }
 }
 
-const UserCard = ( {user}: UserProps) => {
+const UserCard = async ( {user}: UserProps) => {
+  const tags = await getTopInteractedTags({ userId: user._id})
   return (
-    <Link href='/' className="shadow-light100_darknone max-xs:min-w-full xs:w-[240px] w-full">
+    <Link href={`/profile/${user.clerkId}`} className="shadow-light100_darknone max-xs:min-w-full xs:w-[240px] w-full">
         <article className="background-light900_dark200 light-border flex w-full flex-col items-center 
         justify-center rounded-2xl border p-8">
             <Image 
                 src={user.picture}
                 alt='UserImg'
-                width={40}
-                height={40}
+                width={90}
+                height={90}
                 className='rounded-full'
             />
             <div className="mt-4 text-center">
@@ -38,13 +37,17 @@ const UserCard = ( {user}: UserProps) => {
             </div>
             <div className='mt-5'>
                 <div className="flex items-center gap-2">
-                    {user.tags.map((tag) => (
+                    {tags && tags.length > 0 ? (tags.map((tag) => (
                         <RenderTag   
                             key={tag._id}
                             _id={tag._id}
                             name={tag.name}
                         /> 
-                    ))}
+                    ))) : (
+                        <Badge>No tags yet</Badge>
+                    )
+
+                    }
                 </div>
                 
             </div>
