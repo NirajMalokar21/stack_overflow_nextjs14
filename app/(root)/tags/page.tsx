@@ -37,10 +37,10 @@ const page = async () => {
                         {tag.name}
                       </p>
                     </div>
-                    <p className='body-medium pt-5'>
+                    <p className='body-medium text-dark200_light800 pt-5'>
                       Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro quas ea tenetur earum 
                     </p>
-                    <p className='body-medium justify-start py-3'><span className='h3-bold text-primary-500 px-2'>{tag.questions.length}+</span> Questions</p>
+                    <p className='body-medium text-dark200_light800 justify-start py-3'><span className='h3-bold text-primary-500 px-2'>{tag.questions.length}+</span> Questions</p>
                 </div>
               </Link>
             )))
