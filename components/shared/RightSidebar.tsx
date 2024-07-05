@@ -41,7 +41,7 @@ const RightSidebar = () => {
     ]
 
     return (
-        <section className="background-light900_dark200 custom-scrollbar shadow-light-300 light-border sticky right-0 top-0 flex h-screen w-[350px] flex-col overflow-y-auto border-x p-6 pt-4 max-lg:hidden dark:shadow-none">
+        <section className="background-light900_dark200 custom-scrollbar shadow-light-300 light-border sticky right-0 top-0 flex h-screen w-[350px] flex-col overflow-y-auto border-x p-6 pt-28 max-lg:hidden dark:shadow-none">
             <div className='flex flex-col gap-3 '>
                 <h3 className='h3-bold text-dark200_light900 pt-3'>Top Questions</h3>
                 {questionArray.map((item) => {

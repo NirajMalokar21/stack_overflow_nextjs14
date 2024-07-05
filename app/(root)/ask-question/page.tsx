@@ -14,7 +14,7 @@ const page = async () => {
   console.log(mongoUser)
 
   return (
-    <div>
+    <div className='pt-28'>
       <h1 className='h1-bold text-dark100_light900'>Ask a Question</h1>
       <div>
         <Question mongoUserId={JSON.stringify(mongoUser._id)}/>
