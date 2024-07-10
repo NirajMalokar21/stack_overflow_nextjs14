@@ -3,6 +3,7 @@ import AllAnswers from "@/components/shared/AllAnswers";
 import Metric from "@/components/shared/Metric";
 import ParseHTML from "@/components/shared/ParseHTML";
 import RenderTag from "@/components/shared/RenderTag";
+import Votes from "@/components/shared/Votes";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { formatNumber, getTimeStamp } from "@/lib/utils";
@@ -34,31 +35,16 @@ const Page = async({ params, searchParams}: any) => {
                         {result.author.name}
                     </p>
                 </div>
-                <div className="flex items-center">
-                    <Image 
-                        src='/assets/icons/upvote.svg'
-                        alt="Upvote"
-                        height={30}
-                        width={30}
-                        className="cursor-pointer"
-                    />
-                    <p className="body-medium px-2">0</p>
-                    <Image 
-                        src='/assets/icons/downvote.svg'
-                        alt="Downvote"
-                        height={30}
-                        width={30}
-                        className="cursor-pointer"
-                    />
-                    <p className="body-medium px-2">0</p>
-                    <Image 
-                        src='/assets/icons/star-red.svg'
-                        alt="Star"
-                        height={30}
-                        width={30}
-                        className="cursor-pointer"
-                    />
-                </div>
+                <Votes 
+                    type='Question'
+                    itemId={JSON.stringify(result._id)}
+                    userId={JSON.stringify(mongoUser._id)}
+                    upvotes={result.upvotes.length}
+                    downvotes={result.downvotes.length}
+                    hasupVoted={result.upvotes.includes(mongoUser._id)}
+                    hasdownVoted={result.downvotes.includes(mongoUser._id)}
+                    hasSaved={mongoUser?.saved.includes(result._id)}
+                />
             </div>
             <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full text-left">
                {result.title} 
@@ -103,7 +89,7 @@ const Page = async({ params, searchParams}: any) => {
             />
             <AllAnswers 
                 questionId={result._id}
-                userId={JSON.stringify(mongoUser._id)}
+                userId={mongoUser._id}
                 totalAnswers={result.answers.length}
             />
         </>
