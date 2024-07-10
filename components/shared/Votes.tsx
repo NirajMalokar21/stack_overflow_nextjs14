@@ -1,6 +1,7 @@
 "use client"
 import { downvoteAnswer, upvoteAnswer } from '@/lib/actions/answer.action';
 import { downvoteQuestion, upvoteQuestion } from '@/lib/actions/question.action';
+import { toggleSaveQuestion } from '@/lib/actions/user.action';
 import { formatNumber } from '@/lib/utils';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -28,8 +29,13 @@ const Votes = ({
     hasSaved
 }: Props) => {
     const pathname = usePathname()
-    const handleSave = () => {
-
+    
+    const handleSave = async () => {
+      await toggleSaveQuestion({
+        userId: JSON.parse(userId),
+        questionId: JSON.parse(itemId),
+        path: pathname,
+      })
     }
 
     const handleVote = async (action: string) => {
@@ -118,14 +124,25 @@ const Votes = ({
                     {formatNumber(downvotes)}
                 </p>
             </div>
-            <Image 
-                src='/assets/icons/star-red.svg'
-                alt="Star"
-                height={25}
-                width={25}
-                className="cursor-pointer"
-                onClick={() => handleSave()}
-            />
+            {type === 'Question' ?
+              hasSaved ? <Image 
+                  src='/assets/icons/star-filled.svg'
+                  alt="Star"
+                  height={25}
+                  width={25}
+                  className="cursor-pointer pl-2"
+                  onClick={() => handleSave()}
+              /> :
+              <Image 
+                  src='/assets/icons/star-red.svg'
+                  alt="Star"
+                  height={25}
+                  width={25}
+                  className="cursor-pointer pl-2"
+                  onClick={() => handleSave()}
+              />  : <></>
+            }
+            
         </div>
     )
 }

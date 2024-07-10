@@ -140,3 +140,4 @@ export async function upvoteQuestion(params: QuestionVoteParams) {
       throw error;
     }
   }
+

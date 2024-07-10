@@ -43,7 +43,7 @@ const Page = async({ params, searchParams}: any) => {
                     downvotes={result.downvotes.length}
                     hasupVoted={result.upvotes.includes(mongoUser._id)}
                     hasdownVoted={result.downvotes.includes(mongoUser._id)}
-                    hasSaved={mongoUser?.saved.includes(result._id)}
+                    hasSaved={mongoUser.saved.includes(result._id)}
                 />
             </div>
             <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full text-left">
