@@ -46,3 +46,13 @@ export const formatNumber = (num: number): string => {
     return num.toString(); // Return the number as a string if it's less than 1,000
   }
 };
+
+export const getJoinedDate = (date: Date) => {
+  const month = date.toLocaleString('default', { month: 'long' });
+  const year = date.getFullYear();
+
+  // Create the joined date string (e.g., "September 2023")
+  const joinedDate = `${month} ${year}`;
+
+  return joinedDate;
+}

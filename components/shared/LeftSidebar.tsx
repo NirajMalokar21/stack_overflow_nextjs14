@@ -5,16 +5,24 @@ import { usePathname } from 'next/navigation'
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { SignedIn, SignedOut } from '@clerk/nextjs'
+import { SignedIn, SignedOut, useAuth} from '@clerk/nextjs'
 import { Button } from '../ui/button'
 
 const LeftSidebar = () => {
     const pathname = usePathname()
+    const { userId } = useAuth()
     return (
         <section className="background-light900_dark200 light-border shadow-light-300  sticky left-0 top-0 flex h-screen flex-col justify-between gap-6 overflow-y-auto border-r pt-28 max-sm:hidden lg:w-[266px] dark:shadow-none">
                 <div className="flex flex-col p-2">
                     {sidebarLinks.map((item) => {
                         const isActive = (pathname.includes(item.route) && item.route.length > 1 || pathname === item.route)
+                        if(item.route === '/profile') {
+                            if(userId) {
+                                item.route = `${item.route}/${userId}`
+                            } else {
+                                return null
+                            }
+                        }
                         return(
                             <Link
                                 key={item.route}

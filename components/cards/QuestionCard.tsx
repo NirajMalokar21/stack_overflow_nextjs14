@@ -14,6 +14,7 @@ interface QuestionProps {
   }[],
   user: {
     _id: string,
+    clerkId: string,
     name: string,
     picture: string
   },
@@ -57,7 +58,7 @@ const QuestionCard = ( {
             alt="user"
             value={user.name}
             title={` - asked ${getTimeStamp(createdAt)}`}
-            href={`/profile/${user._id}`}
+            href={`/profile/${user.clerkId}`}
             isAuthor
             textStyles="body-medium text-dark400_light700"
           />
