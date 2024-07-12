@@ -8,6 +8,9 @@ import { SignedIn } from "@clerk/nextjs"
 import { auth } from "@clerk/nextjs/server"
 import Image from "next/image"
 import Link from "next/link"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Stats from "@/components/shared/Stats"
+
 
 const Page = async({ params, searchParams}: URLProps) => {
     const { userId: clerkId } = auth()
@@ -66,7 +69,26 @@ const Page = async({ params, searchParams}: URLProps) => {
                         )}
                     </SignedIn>
                 </div>
+            </div>
 
+            <Stats 
+                answerNum={userInfo.totalAnswers}
+                questionNum={userInfo.totalQuestions}
+            />
+
+            <div className="mt-10 flex gap-10">
+                <Tabs defaultValue="account" className="flex-1">
+                    <TabsList className="background-light800_dark400 min-h-[42px] p-1">
+                        <TabsTrigger value="top-posts" className="tab">Top Posts</TabsTrigger>
+                        <TabsTrigger value="answers" className="tab">Answers</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="top-posts">
+                        TOP POSTS
+                    </TabsContent>
+                    <TabsContent value="answers">
+                        ANSWERS
+                    </TabsContent>
+                </Tabs>
             </div>
         </>
     )
