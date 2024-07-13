@@ -10,6 +10,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Stats from "@/components/shared/Stats"
+import QuestionTab from "@/components/shared/QuestionTab"
 
 
 const Page = async({ params, searchParams}: URLProps) => {
@@ -83,7 +84,11 @@ const Page = async({ params, searchParams}: URLProps) => {
                         <TabsTrigger value="answers" className="tab">Answers</TabsTrigger>
                     </TabsList>
                     <TabsContent value="top-posts">
-                        TOP POSTS
+                        <QuestionTab 
+                            searchParams={searchParams}
+                            userId={userInfo.user._id}
+                            clerkId={userInfo.user.clerkId}
+                        />
                     </TabsContent>
                     <TabsContent value="answers">
                         ANSWERS
