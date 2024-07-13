@@ -11,6 +11,7 @@ import Link from "next/link"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Stats from "@/components/shared/Stats"
 import QuestionTab from "@/components/shared/QuestionTab"
+import AnswersTab from "@/components/shared/AnswersTab"
 
 
 const Page = async({ params, searchParams}: URLProps) => {
@@ -91,7 +92,11 @@ const Page = async({ params, searchParams}: URLProps) => {
                         />
                     </TabsContent>
                     <TabsContent value="answers">
-                        ANSWERS
+                        <AnswersTab 
+                            searchParams={searchParams}
+                            userId={userInfo.user._id}
+                            clerkId={userInfo.user.clerkId}
+                        />
                     </TabsContent>
                 </Tabs>
             </div>

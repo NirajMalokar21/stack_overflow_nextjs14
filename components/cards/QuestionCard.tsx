@@ -21,7 +21,7 @@ interface QuestionProps {
   votes: number,
   answers: Array<object>,
   views: number,
-  createdAt: Date
+  createdAt: Date,
 }
 
 const QuestionCard = ( {
@@ -33,15 +33,17 @@ const QuestionCard = ( {
   answers,
   views,
   createdAt,
+
 }: QuestionProps) => {
   return (
     <div className='background-light900_dark200 border-light shadow-light-300 relative my-6 flex flex-col
     rounded-lg p-3'>
-      <Link 
-        href={`/question/${_id}`}
-      >
-        <h3 className='h3-bold text-dark200_light900 line-clamp-1'>{title}</h3>
-      </Link>
+      <div className='flex flex-row items-center justify-between gap-3'>
+        <Link href={`/question/${_id}`}>
+          <h3 className='h3-bold text-dark200_light900 line-clamp-1'>{title}</h3>
+        </Link>
+        
+      </div>
       
       <div className='flex flex-row gap-3 py-5'>
         {tags.map((tag) => (

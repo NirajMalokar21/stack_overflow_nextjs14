@@ -199,7 +199,7 @@ export async function getUserQuestions(params: GetUserStatsParams) {
     try {
         connectToDatabse()
 
-        const { userId, page=1, pageSize=10 } = params;
+        const { userId } = params;
 
         const totalQuestions = await Question.countDocuments({ author: userId })
         const userQuestions = await Question.find({ author: userId })
@@ -208,6 +208,26 @@ export async function getUserQuestions(params: GetUserStatsParams) {
             .populate('author', '_id clerkId name picture')
 
         return { totalQuestions, questions: userQuestions}
+
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+
+export async function getUserAnswers(params: GetUserStatsParams) {
+    try {
+        connectToDatabse()
+
+        const { userId } = params;
+
+        const totalAnswers = await Answer.countDocuments({ author: userId })
+        const userAnswers = await Answer.find({ author: userId })
+            .sort({ upvotes: -1})
+            .populate('question',  '_id title')
+            .populate('author', '_id clerkId name picture')
+
+        return { totalAnswers, answers: userAnswers}
 
     } catch (error) {
         console.log(error)
