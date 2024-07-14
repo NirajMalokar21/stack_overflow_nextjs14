@@ -29,6 +29,7 @@ const Page = async({ params, searchParams}: URLProps) => {
                 result.questions.map((question: any) => (
                 <QuestionCard 
                     key={question._id}
+                    clerkId={question.author.clerkId}
                     _id={question._id}
                     answers={question.answers}
                     title={question.title}

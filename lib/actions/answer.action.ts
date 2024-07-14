@@ -1,10 +1,11 @@
 "use server"
 import { revalidatePath } from "next/cache";
 import { connectToDatabse } from "../mongoose";
-import { AnswerVoteParams, CreateAnswerParams, GetAnswersParams } from "./shared.types";
+import { AnswerVoteParams, CreateAnswerParams, DeleteAnswerParams, GetAnswersParams } from "./shared.types";
 import Answer from "@/database/answer.model";
 import Question from "@/database/question.model";
 import User from "@/database/user.model";
+import Interaction from "@/database/interaction.model";
 
 export async function createAnswer (params: CreateAnswerParams) {
     try {
@@ -24,6 +25,27 @@ export async function createAnswer (params: CreateAnswerParams) {
     catch (error) {
 
     }
+}
+
+export async function deleteAnswer (params: DeleteAnswerParams) {
+  try {
+    connectToDatabse()
+
+    const { answerId, path } = params;
+
+    const answer = await Answer.findById({ _id: answerId })
+
+    if(!answer) throw Error("Answer not found!")
+
+    await answer.deleteOne({ _id: answerId });
+    await Interaction.deleteMany({ answer: answerId });
+    await Question.updateMany({ _id: answer.question }, { $pull: { answers: answerId }});
+
+    revalidatePath(path)
+    
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export async function getAllAnswers (params: GetAnswersParams) {
