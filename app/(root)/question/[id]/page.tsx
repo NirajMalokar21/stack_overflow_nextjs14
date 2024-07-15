@@ -9,6 +9,7 @@ import { getUserById } from "@/lib/actions/user.action";
 import { formatNumber, getTimeStamp } from "@/lib/utils";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Page = async({ params, searchParams}: any) => {
@@ -23,7 +24,7 @@ const Page = async({ params, searchParams}: any) => {
     return (
         <>
             <div className="flex-start w-full flex-row justify-between py-4 pt-28">
-                <div className="flex-start w-full flex-row">
+                <Link href={`/profile/${clerkId}`} className="flex-start w-full flex-row">
                     <Image
                         src={result.author.picture}
                         alt="User Image"
@@ -34,7 +35,8 @@ const Page = async({ params, searchParams}: any) => {
                     <p className="h3-bold text-dark200_light800 px-4">
                         {result.author.name}
                     </p>
-                </div>
+                </Link>
+
                 <Votes 
                     type='Question'
                     itemId={JSON.stringify(result._id)}

@@ -3,7 +3,7 @@
 import Question from "@/database/question.model";
 import { connectToDatabse } from "../mongoose"
 import Tag from "@/database/tag.model";
-import { CreateQuestionParams, DeleteQuestionParams, GetQuestionByIdParams, GetQuestionsParams, QuestionVoteParams } from "./shared.types";
+import { CreateQuestionParams, DeleteQuestionParams, EditQuestionParams, GetQuestionByIdParams, GetQuestionsParams, QuestionVoteParams } from "./shared.types";
 import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
 import Answer from "@/database/answer.model";
@@ -73,8 +73,31 @@ export async function createQuestion (params: CreateQuestionParams) {
         revalidatePath(path)
     }
     catch (error) {
-
+      console.log(error)
+      throw error
     }
+}
+
+export async function editQuestion (params: EditQuestionParams) {
+  try {
+    connectToDatabse()
+
+    const { questionId, title, content, path } = params
+
+    const question = await Question.findById(questionId)
+
+    if(!question) throw new Error("Question not found")
+
+    question.title = title;
+    question.content = content;
+    await question.save()
+
+    revalidatePath(path)
+    
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
 }
 
 export async function getQuestionById (params: GetQuestionByIdParams) {
