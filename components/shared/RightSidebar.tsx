@@ -4,44 +4,11 @@ import React from 'react'
 import RenderTag from './RenderTag'
 import { getHotQuestions } from '@/lib/actions/question.action'
 import Link from 'next/link'
+import { getTopPopularTags } from '@/lib/actions/tag.action'
 
 const RightSidebar = async () => {
-    const questionArray = [
-        "Would it be appropriate to point out an error in another paper during a referee report?",
-        "How can an airconditioning machine exist?",
-        "Interrogated every time crossing UK Border as citizen",
-        "Low digit addition generator",
-        "What is an example of 3 numbers that do not make up a vector?"
-    ]
     const hotQuestions = await getHotQuestions()
-
-    const popularTags = [
-        {
-            _id: 1,
-            name: "javascript",
-            totalQuestions: 12434
-        },
-        {
-            _id: 2,
-            name: "python",
-            totalQuestions: 11584
-        },
-        {
-            _id: 3,
-            name: "react",
-            totalQuestions: 7446
-        },
-        {
-            _id: 4,
-            name: "django",
-            totalQuestions: 5973
-        },
-        {
-            _id: 5,
-            name: "php",
-            totalQuestions: 1836
-        },
-    ]
+    const popularTags = await getTopPopularTags()
 
     return (
         <section className="background-light900_dark200 custom-scrollbar shadow-light-300 light-border sticky right-0 top-0 flex h-screen w-[350px] flex-col overflow-y-auto border-x p-6 pt-28 max-lg:hidden dark:shadow-none">
@@ -71,7 +38,7 @@ const RightSidebar = async () => {
                             key={item._id}
                             _id={item._id}
                             name={item.name}
-                            totalQuestions={item.totalQuestions}
+                            totalQuestions={item.numberOfQuestions}
                             showCount={true}
                         />
                     )
