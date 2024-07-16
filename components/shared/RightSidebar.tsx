@@ -2,8 +2,10 @@
 import Image from 'next/image'
 import React from 'react'
 import RenderTag from './RenderTag'
+import { getHotQuestions } from '@/lib/actions/question.action'
+import Link from 'next/link'
 
-const RightSidebar = () => {
+const RightSidebar = async () => {
     const questionArray = [
         "Would it be appropriate to point out an error in another paper during a referee report?",
         "How can an airconditioning machine exist?",
@@ -11,6 +13,7 @@ const RightSidebar = () => {
         "Low digit addition generator",
         "What is an example of 3 numbers that do not make up a vector?"
     ]
+    const hotQuestions = await getHotQuestions()
 
     const popularTags = [
         {
@@ -44,17 +47,19 @@ const RightSidebar = () => {
         <section className="background-light900_dark200 custom-scrollbar shadow-light-300 light-border sticky right-0 top-0 flex h-screen w-[350px] flex-col overflow-y-auto border-x p-6 pt-28 max-lg:hidden dark:shadow-none">
             <div className='flex flex-col gap-3 '>
                 <h3 className='h3-bold text-dark200_light900 pt-3'>Top Questions</h3>
-                {questionArray.map((item) => {
+                {hotQuestions.map((question) => {
                     return (
-                        <div id='hotNetwork' key={item} className="flex flex-row justify-between gap-2 py-1.5">
-                            <p className='body-medium text-dark500_light700'>{item}</p>
+                        <Link key={question._id} href={`/question/${question._id}`} className="flex flex-row justify-between gap-2 py-1.5">
+                            <p className='body-medium text-dark500_light700 line-clamp-1'>{question.title}</p>
                             <Image
                                 src='/assets/icons/chevron-right.svg'
                                 alt='arrow'
                                 height={20}
                                 width={20}
+                                className='invert-colors'
                             />
-                        </div>
+                        </Link>
+
                     )
                 })}
             </div>
