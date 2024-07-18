@@ -4,11 +4,14 @@ import NoResult from '@/components/shared/NoResult'
 import LocalSearchBar from '@/components/shared/search/LocalSearchBar'
 import { TagFilters } from '@/constants/filters'
 import { getTags } from '@/lib/actions/tag.action'
+import { SearchParamsProps } from '@/types'
 import Link from 'next/link'
 import React from 'react'
 
-const page = async () => {
-    const result = await getTags({});
+const page = async ({searchParams }: SearchParamsProps) => {
+    const result = await getTags({
+      searchQuery: searchParams.q
+    });
     return (
       <div className='pt-28'>
         <h1 className='h1-bold text-dark100_light900'>Tags</h1>
