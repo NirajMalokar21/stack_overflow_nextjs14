@@ -14,7 +14,8 @@ import React from 'react'
 
 export default async function Home({ searchParams }: SearchParamsProps) {
   const result = await getQuestions({
-    searchQuery: searchParams.q
+    searchQuery: searchParams.q,
+    filter: searchParams.filter
   });
   console.log(result?.questions)
   return (
@@ -50,7 +51,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
           <QuestionCard 
             key={question._id}
             clerkId={question.author.clerkId}
-            _id={question._id}
+            _id={JSON.stringify(question._id)}
             answers={question.answers}
             title={question.title}
             tags={question.tags}

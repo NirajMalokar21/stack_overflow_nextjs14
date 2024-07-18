@@ -14,9 +14,31 @@ export async function getQuestions (params: GetQuestionsParams) {
     try {
         connectToDatabse();
 
-        const { searchQuery } = params
+        const { searchQuery, filter } = params
 
         const query: FilterQuery<typeof Question> = {}
+
+        let sortOptions = {}
+
+        if(filter) {
+          switch (filter) {
+            case "newest":
+              sortOptions = { createdAt: -1}
+              break;
+            
+            case "recommended":
+              sortOptions = { views: -1 }
+              break;
+            
+            case "unanswered": 
+              sortOptions = { answers: 1 }
+              break;
+
+            case "frequent":
+              sortOptions = { views: -1 }
+              break;
+          }
+        }
 
         if(searchQuery){
           query.$or = [
@@ -28,7 +50,7 @@ export async function getQuestions (params: GetQuestionsParams) {
         const questions = await Question.find(query)
             .populate({ path: 'tags', model: Tag})
             .populate({ path: 'author', model: User})
-            .sort({ createdAt: -1 })
+            .sort(sortOptions)
 
         return {questions}
     } catch(error){
