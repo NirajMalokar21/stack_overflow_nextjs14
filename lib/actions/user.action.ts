@@ -27,9 +27,25 @@ export async function getUsers(params: GetAllUsersParams) {
         connectToDatabse()
 
         // const { page=1, pageSize=20, filter, searchQuery } = params
-        const { searchQuery } = params;
+        const { searchQuery, filter } = params;
 
         const query: FilterQuery<typeof User> = {}
+
+        let sortOptions = {}
+
+        if(filter) {
+            switch (filter) {
+                case "new_users":
+                    sortOptions = { joinDate: -1 };
+                    break;
+                case "old_users":
+                    sortOptions = { joinDate: 1 };
+                    break;
+                case "top_contributors":
+                    sortOptions = { reputation: 1}
+            }
+
+        }
 
         if(searchQuery) {
             query.$or = [
@@ -39,7 +55,7 @@ export async function getUsers(params: GetAllUsersParams) {
         }
 
         const users = await User.find(query)
-            .sort({ createdAt: -1})
+            .sort(sortOptions)
 
         console.log(users)
         return {users}
