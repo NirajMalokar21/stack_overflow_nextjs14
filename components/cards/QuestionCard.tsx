@@ -44,14 +44,14 @@ const QuestionCard = ( {
     <div className='background-light900_dark200 border-light shadow-light-300 relative my-6 flex flex-col
     rounded-lg p-3'>
       <div className='flex flex-row items-center justify-between gap-3'>
-        <Link href={`/question/${_id}`}>
+        <Link href={`/question/${JSON.parse(_id)}`}>
           <h3 className='h3-bold text-dark200_light900 line-clamp-1'>{title}</h3>
         </Link>
         <SignedIn>
           {showActionButtons && (
             <EditDeleteAction 
               type="Question"
-              itemId={_id}
+              itemId={JSON.parse(_id)}
             />
           )}
         </SignedIn>

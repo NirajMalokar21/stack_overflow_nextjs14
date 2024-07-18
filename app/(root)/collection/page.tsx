@@ -15,12 +15,12 @@ export default async function Home({ searchParams }: SearchParamsProps) {
     
   const result = await getSavedQuestions({
     clerkId: userId,
-    searchQuery: searchParams.q
+    searchQuery: searchParams.q,
+    filter: searchParams.filter
   });
   return (
     <>
       <h1 className='h1-bold text-dark100_light900 pt-28'>Saved Questions</h1>
-
 
       <div className="mt-11 flex flex-row justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearchBar 
@@ -42,7 +42,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
           <QuestionCard 
             key={question._id}
             clerkId={question.author.clerkId}
-            _id={question._id}
+            _id={JSON.stringify(question._id)}
             answers={question.answers}
             title={question.title}
             tags={question.tags}
