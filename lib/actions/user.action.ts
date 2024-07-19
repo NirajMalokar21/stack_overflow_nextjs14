@@ -27,7 +27,7 @@ export async function getUsers(params: GetAllUsersParams) {
         connectToDatabse()
 
         // const { page=1, pageSize=20, filter, searchQuery } = params
-        const { searchQuery, filter } = params;
+        const { searchQuery, filter, page=1, pageSize=20 } = params;
 
         const query: FilterQuery<typeof User> = {}
 
@@ -56,9 +56,15 @@ export async function getUsers(params: GetAllUsersParams) {
 
         const users = await User.find(query)
             .sort(sortOptions)
+            .skip( page > 0 ? ((page - 1) * pageSize) : 0)
+            .limit( pageSize )
+
+        const totalUsers = await User.countDocuments(query)
+          
+        const isNext = totalUsers > ((page - 1) * pageSize) + users.length ;
 
         console.log(users)
-        return {users}
+        return {users, isNext}
 
     } catch (error) {
         console.log(error)
@@ -166,8 +172,7 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
 export async function getSavedQuestions(params: GetSavedQuestionsParams) {
     try {
         connectToDatabse()
-        // , page=1, filter, pageSize=10 
-        const { clerkId, searchQuery, filter} = params;
+        const { clerkId, searchQuery, filter , page=1, pageSize=10} = params;
         const query: FilterQuery<typeof Question> = searchQuery
         ? { title: {$regex: new RegExp(searchQuery, 'i')}}
         : { };
@@ -202,21 +207,24 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
             path: 'saved',
             match: query,
             options: {
-                sort: sortOptions
+                sort: sortOptions,
+                skip: (page - 1) * pageSize,
+                limit: pageSize
             },
             populate: [
                 { path: 'tags', model: Tag, select: "_id name" },
                 { path: 'author', model: User, select: "_id clerkId name picture"}
-            ]
+            ],
         })
 
         if(!user) {
             throw new Error('User not found')
         }
-
         const saved = user.saved
 
-        return { questions: saved }
+        const isNext = saved > pageSize
+
+        return { questions: saved, isNext }
 
     } catch (error) {
         console.log(error)

@@ -14,7 +14,7 @@ export async function getQuestions (params: GetQuestionsParams) {
     try {
         connectToDatabse();
 
-        const { searchQuery, filter } = params
+        const { searchQuery, filter, page=1, pageSize=20 } = params
 
         const query: FilterQuery<typeof Question> = {}
 
@@ -51,8 +51,14 @@ export async function getQuestions (params: GetQuestionsParams) {
             .populate({ path: 'tags', model: Tag})
             .populate({ path: 'author', model: User})
             .sort(sortOptions)
+            .skip( page > 0 ? ((page - 1) * pageSize) : 0)
+            .limit( pageSize )
 
-        return {questions}
+        const totalQuestions = await Question.countDocuments(query)
+          
+        const isNext = totalQuestions > ((page - 1) * pageSize) + questions.length;
+
+        return {questions, isNext}
     } catch(error){
         console.log(error)
         throw error

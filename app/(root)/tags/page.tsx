@@ -1,6 +1,7 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import Filter from '@/components/shared/Filter'
 import NoResult from '@/components/shared/NoResult'
+import Pagination from '@/components/shared/Pagination'
 import LocalSearchBar from '@/components/shared/search/LocalSearchBar'
 import { TagFilters } from '@/constants/filters'
 import { getTags } from '@/lib/actions/tag.action'
@@ -11,7 +12,9 @@ import React from 'react'
 const page = async ({searchParams }: SearchParamsProps) => {
     const result = await getTags({
       searchQuery: searchParams.q,
-      filter: searchParams.filter
+      filter: searchParams.filter,
+      page: searchParams.page ? +searchParams.page : 1,
+      pageSize: 6
     });
     return (
       <div className='pt-28'>
@@ -56,6 +59,12 @@ const page = async ({searchParams }: SearchParamsProps) => {
                 linkTitle='Ask Question'
               />
             ))}
+        </div>
+        <div className='mt-10'>
+          <Pagination
+            pageNumber={searchParams?.page ? +searchParams.page : 1}
+            isNext={result?.isNext}
+          />
         </div>
       </div>
     )
