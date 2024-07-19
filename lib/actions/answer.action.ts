@@ -51,12 +51,34 @@ export async function deleteAnswer (params: DeleteAnswerParams) {
 export async function getAllAnswers (params: GetAnswersParams) {
     try {
         connectToDatabse()
-        const { questionId } = params;
+        const { questionId, sortBy } = params;
+
+        let sortOptions = {}
+
+        if(sortBy) {
+          switch(sortBy) {
+            case "lowestUpvotes":
+              sortOptions = { upvotes: 1 };
+              break;
+
+            case "highestUpvotes":
+              sortOptions = { upvotes: -1 };
+              break;
+
+            case "recent":
+              sortOptions = { createdAt: -1 };
+              break;
+
+            case "old":
+              sortOptions = { createdAt: 1 };
+              break;
+          }
+        }
 
         const answers = await Answer.find({ question: questionId })
             .populate({ path: 'author', model: User })
             .populate({ path: 'question', model: Question })
-            .sort({ createdAt: -1 });
+            .sort(sortOptions);
 
         return { answers }
 

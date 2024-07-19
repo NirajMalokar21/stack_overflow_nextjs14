@@ -45,9 +45,28 @@ export async function getTags(params: GetAllTagsParams) {
         connectToDatabse()
 
         // const { page=1, pageSize=20, filter, searchQuery } = params;
-        const { searchQuery } = params
+        const { searchQuery, filter } = params
 
         const query: FilterQuery<typeof Tag> = {}
+
+        let sortOptions = {}
+
+        if(filter) {
+            switch (filter) {
+                case "popular":
+                    sortOptions = { questions: -1 };
+                    break;
+                case "recent":
+                    sortOptions = { createdAt: -1 };
+                    break;
+                case "name":
+                    sortOptions = { name: 1 };
+                    break;
+                case "old": 
+                    sortOptions = { createdAt: 1 };
+                    break;
+            }
+        }
 
         if(searchQuery) {
             query.$or = [
@@ -56,6 +75,7 @@ export async function getTags(params: GetAllTagsParams) {
         }
 
         const tags = await Tag.find(query)
+            .sort(sortOptions)
 
         return {tags}
 
