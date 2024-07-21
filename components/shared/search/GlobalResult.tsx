@@ -26,7 +26,8 @@ const GlobalResult = () => {
         setIsLoading(true);
 
         try {
-            const result = await globalSearch({query: global, type})
+            const result = await globalSearch({ query: global, type })
+            setResult(JSON.parse(result))
             
         } catch (error) {
             console.log(error)
@@ -35,9 +36,25 @@ const GlobalResult = () => {
             setIsLoading(false)
         }
     }
+
+    if(global) fetchResult();
   }, [global, type])
 
-  const renderLink = (type: string, id: string) => {return "/"}
+  const renderLink = (type: string, id: string) => {
+    switch(type) {
+        case 'question':
+            return `/question/${id}`
+        case 'user':
+            return `/profile/${id}`
+        case 'tag':
+            return `/tags/${id}`
+        case 'answer':
+            return `/question/${id}`
+
+        default: 
+            return '/'
+    }
+  }
 
   return (
     <div className='bg-light-800 dark:bg-dark-400 absolute top-full z-10 mt-3 w-full rounded-xl py-5 shadow-sm'>
@@ -60,7 +77,7 @@ const GlobalResult = () => {
                      {result.length > 0 ? (
                         result.map((item: any, index: number) => (
                             <Link
-                                href={renderLink('type', 'id')}
+                                href={renderLink(item.type, item.id)}
                                 key={item.type + item.id + index}
                                 className='pv-2.5 hover:bg-light-700/50 dark:hover:bg-dark-500/50 flex w-full cursor-pointer items-start gap-3 px-5
                                 py-2.5'
