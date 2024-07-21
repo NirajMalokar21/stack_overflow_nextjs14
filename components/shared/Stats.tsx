@@ -1,12 +1,8 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import { formatNumber } from '@/lib/utils';
+import { BadgeCounts } from '@/types';
 import Image from 'next/image';
 import React from 'react'
-
-interface StatProps {
-    questionNum: number;
-    answerNum: number;
-}
 
 interface StatsCardProps {
     imgUrl: string;
@@ -32,10 +28,17 @@ const StatsCard = ( { imgUrl, value, title }: StatsCardProps) => {
     )
 } 
 
-const Stats = ({ questionNum, answerNum}: StatProps) => {
+interface StatProps {
+  reputation: number
+  questionNum: number
+  answerNum: number
+  badges: BadgeCounts
+}
+
+const Stats = ({ questionNum, answerNum, badges, reputation }: StatProps) => {
   return (
     <div className="mt-10">
-      <h4 className="h3-semibold text-dark200_light900">Stats</h4>
+      <h4 className="h3-semibold text-dark200_light900">Reputation: {reputation}</h4>
 
       <div className="xs:grid-cols-2 mt-5 grid grid-cols-1 gap-5 md:grid-cols-4">
         <div className="light-border background-light900_dark300 shadow-light-300 dark:shadow-dark-200 flex flex-wrap 
@@ -56,19 +59,19 @@ const Stats = ({ questionNum, answerNum}: StatProps) => {
 
         <StatsCard 
           imgUrl="/assets/icons/gold-medal.svg"
-          value={0}
+          value={badges.GOLD}
           title="Gold Badges"
         />
 
         <StatsCard 
           imgUrl="/assets/icons/silver-medal.svg"
-          value={0}
+          value={badges.SILVER}
           title="Silver Badges"
         />
 
         <StatsCard 
           imgUrl="/assets/icons/bronze-medal.svg"
-          value={0}
+          value={badges.BRONZE}
           title="Bronze Badges"
         />
       </div>
