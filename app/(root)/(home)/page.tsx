@@ -12,7 +12,6 @@ import { SearchParamsProps } from '@/types'
 import Link from 'next/link'
 import React from 'react'
 
-
 export default async function Home({ searchParams }: SearchParamsProps) {
   const result = await getQuestions({
     searchQuery: searchParams.q,
@@ -20,6 +19,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
     page: searchParams.page ? +searchParams.page : 1,
     pageSize: 5
   });
+
   return (
     <>
       <div className='flex w-full flex-col-reverse justify-between gap-4 pt-28 sm:flex-row sm:items-center'>

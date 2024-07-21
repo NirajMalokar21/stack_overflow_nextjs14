@@ -21,6 +21,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
     page: searchParams.page ? +searchParams.page : 1,
     pageSize: 5
   });
+
   return (
     <>
       <h1 className='h1-bold text-dark100_light900 pt-28'>Saved Questions</h1>

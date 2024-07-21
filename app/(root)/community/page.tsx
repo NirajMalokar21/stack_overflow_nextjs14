@@ -18,7 +18,7 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
 
   return (
     <>
-      <h1 className="h1-bold text-dark100_light900">All Users</h1> 
+      <h1 className="h1-bold text-dark100_light900 pt-28">All Users</h1> 
 
         <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
           <LocalSearchBar 
