@@ -12,24 +12,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Stats from "@/components/shared/Stats"
 import QuestionTab from "@/components/shared/QuestionTab"
 import AnswersTab from "@/components/shared/AnswersTab"
-import NoResult from "@/components/shared/NoResult"
+import { redirect } from "next/navigation"
 
 
 const Page = async({ params, searchParams}: URLProps) => {
+
     const { userId: clerkId } = auth()
-    if(!clerkId){
-        return (
-            <div className="pt-28">
-                <NoResult
-                    title="You are not logged in!"
-                    description="Please log in to visit your profile page"
-                    link="/sign-in"
-                    linkTitle="Sign In"
-                />
-            </div>
-        )
-    }
     const userInfo = await getUserInfo({clerkId: params.id})
+    if(!clerkId){
+        return redirect('/profile')
+    }
     return (
         <>
             <div className="flex flex-col-reverse items-start justify-between pt-28 sm:flex-row">
