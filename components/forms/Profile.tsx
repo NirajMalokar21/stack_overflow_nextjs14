@@ -79,11 +79,11 @@ const Profile = ({ clerkId, user }: Props) => {
             name="name"
             render={({ field }) => (
               <FormItem className='flex w-full flex-col'>
-                <FormLabel className='paragraph-semibold text-dark400-light800'>
+                <FormLabel className='paragraph-semibold text-dark400_light800'>
                   Name <span className="text-primary-500">*</span>
                 </FormLabel>
                 <FormControl className='mt-3.5'>
-                  <Input className='np-focus paragraph-regular background-light700_dark300 light-border-2 
+                  <Input className='np-focus paragraph-regular background-light800_dark300 light-border-2 
                   text-dark300_light700 min-h-[56px] border'
                   {...field} />
                 </FormControl>
@@ -97,11 +97,11 @@ const Profile = ({ clerkId, user }: Props) => {
             name="username"
             render={({ field }) => (
               <FormItem className='flex w-full flex-col'>
-                <FormLabel className='paragraph-semibold text-dark400-light800'>
+                <FormLabel className='paragraph-semibold text-dark400_light800'>
                   Username <span className="text-primary-500">*</span>
                 </FormLabel>
                 <FormControl className='mt-3.5'>
-                  <Input className='np-focus paragraph-regular background-light700_dark300 light-border-2 
+                  <Input className='np-focus paragraph-regular background-light800_dark300 light-border-2 
                   text-dark300_light700 min-h-[56px] border'
                   {...field} />
                 </FormControl>
@@ -115,11 +115,11 @@ const Profile = ({ clerkId, user }: Props) => {
             name="bio"
             render={({ field }) => (
               <FormItem className='flex w-full flex-col'>
-                <FormLabel className='paragraph-semibold text-dark400-light800'>
+                <FormLabel className='paragraph-semibold text-dark400_light800'>
                   Bio 
                 </FormLabel>
                 <FormControl className='mt-3.5'>
-                  <Input className='np-focus paragraph-regular background-light700_dark300 light-border-2 
+                  <Input className='np-focus paragraph-regular background-light800_dark300 light-border-2 
                   text-dark300_light700 min-h-[56px] border'
                   {...field} />
                 </FormControl>
@@ -133,11 +133,11 @@ const Profile = ({ clerkId, user }: Props) => {
             name="portfolioWebsite"
             render={({ field }) => (
               <FormItem className='flex w-full flex-col'>
-                <FormLabel className='paragraph-semibold text-dark400-light800'>
+                <FormLabel className='paragraph-semibold text-dark400_light800'>
                   Portfolio Website
                 </FormLabel>
                 <FormControl className='mt-3.5'>
-                  <Input className='np-focus paragraph-regular background-light700_dark300 light-border-2 
+                  <Input className='np-focus paragraph-regular background-light800_dark300 light-border-2 
                   text-dark300_light700 min-h-[56px] border'
                   {...field} />
                 </FormControl>
@@ -151,11 +151,11 @@ const Profile = ({ clerkId, user }: Props) => {
             name="location"
             render={({ field }) => (
               <FormItem className='flex w-full flex-col'>
-                <FormLabel className='paragraph-semibold text-dark400-light800'>
+                <FormLabel className='paragraph-semibold text-dark400_light800'>
                   Location 
                 </FormLabel>
                 <FormControl className='mt-3.5'>
-                  <Input className='np-focus paragraph-regular background-light700_dark300 light-border-2 
+                  <Input className='np-focus paragraph-regular background-light800_dark300 light-border-2 
                   text-dark300_light700 min-h-[56px] border'
                   {...field} />
                 </FormControl>

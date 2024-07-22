@@ -59,7 +59,7 @@ const Filter = ( {filters, otherClasses, containerClasses}: CustomFilterTypes ) 
                                 <SelectItem 
                                     key={filter.value}
                                     onChange={() => handelTypeClick(filter.value)}
-                                    className='hover:bg-light-800 hover:dark:bg-slate-800'
+                                    className='focus:bg-light-800 dark:focus:bg-dark-400 cursor-pointer'
                                     value={filter.value}>
                                         {filter.name}</SelectItem>
                                     
