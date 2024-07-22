@@ -12,10 +12,23 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Stats from "@/components/shared/Stats"
 import QuestionTab from "@/components/shared/QuestionTab"
 import AnswersTab from "@/components/shared/AnswersTab"
+import NoResult from "@/components/shared/NoResult"
 
 
 const Page = async({ params, searchParams}: URLProps) => {
     const { userId: clerkId } = auth()
+    if(!clerkId){
+        return (
+            <div className="pt-28">
+                <NoResult
+                    title="You are not logged in!"
+                    description="Please log in to visit your profile page"
+                    link="/sign-in"
+                    linkTitle="Sign In"
+                />
+            </div>
+        )
+    }
     const userInfo = await getUserInfo({clerkId: params.id})
     return (
         <>
