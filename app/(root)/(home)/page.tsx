@@ -79,7 +79,6 @@ export default async function Home({ searchParams }: SearchParamsProps) {
         result.questions.map((question) => (
           <QuestionCard 
             key={question._id}
-            clerkId={question.author.clerkId}
             _id={JSON.stringify(question._id)}
             answers={question.answers}
             title={question.title}

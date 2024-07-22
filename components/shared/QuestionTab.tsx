@@ -5,7 +5,7 @@ import QuestionCard from '../cards/QuestionCard'
 
 interface Props extends SearchParamsProps{
   userId: string,
-  clerkId?: string
+  clerkId?: string | null 
 }
 
 const QuestionTab = async ({ searchParams, userId, clerkId }: Props) => {
@@ -15,7 +15,7 @@ const QuestionTab = async ({ searchParams, userId, clerkId }: Props) => {
       {results.questions.map((question) => (
         <QuestionCard 
           key={question._id}
-          clerkId={question.author.clerkId}
+          clerkId={clerkId}
           _id={JSON.stringify(question._id)}
           answers={question.answers}
           title={question.title}

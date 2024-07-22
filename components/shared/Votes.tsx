@@ -7,7 +7,7 @@ import { formatNumber } from '@/lib/utils';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from '../ui/use-toast';
 
 interface Props {
@@ -33,7 +33,7 @@ const Votes = ({
 }: Props) => {
     const pathname = usePathname()
     const router = useRouter()
-
+    const [isDisabled, setIsDisabled] = useState(false)
     
     
     const handleSave = async () => {
@@ -57,11 +57,17 @@ const Votes = ({
 
     const handleVote = async (action: string) => {
         if(!userId) {
-          return toast({
+          toast({
             title: 'Please log in!',
             description: 'You need to log in to do this action'
           });
+          return;
         }
+
+        setIsDisabled(true);
+        setTimeout(() => {
+          setIsDisabled(false);
+        }, 3000);
     
         if(action === 'upvote') {
           if(type === 'Question') {
@@ -82,10 +88,11 @@ const Votes = ({
             })
           }
     
-          return toast({
+          toast({
             title: `Upvote ${hasupVoted ? 'Removed' : 'Added'} Succesfully`,
             variant: !hasupVoted ? 'default' : 'destructive'
           });
+          return;
         }
     
         if(action === 'downvote') {
@@ -107,11 +114,10 @@ const Votes = ({
             })
           }
     
-          return toast({
+          toast({
             title: `Upvote ${hasupVoted ? 'Removed' : 'Added'} Succesfully`,
             variant: !hasupVoted ? 'default' : 'destructive'
           });
-          
         }
     }
 
@@ -121,6 +127,7 @@ const Votes = ({
         userId: userId ? JSON.parse(userId) : undefined,
       })
     }, [itemId, userId, pathname, router])
+
 
     return (
         <div className="flex items-center">
@@ -133,7 +140,7 @@ const Votes = ({
                 height={25}
                 width={25}
                 className="cursor-pointer"
-                onClick={() => handleVote('upvote')}
+                onClick={!isDisabled ? () => handleVote('upvote') : undefined}
             />
             <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1 px-2">
                 <p className="subtle-medium text-dark400_light900">
@@ -149,7 +156,7 @@ const Votes = ({
                 height={25}
                 width={25}
                 className="cursor-pointer"
-                onClick={() => handleVote('downvote')}
+                onClick={!isDisabled ? () => handleVote('downvote') : undefined}
             />
             <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
                 <p className="subtle-medium text-dark400_light900">
@@ -163,7 +170,7 @@ const Votes = ({
                   height={25}
                   width={25}
                   className="cursor-pointer pl-2"
-                  onClick={() => handleSave()}
+                  onClick={!isDisabled ? () => handleSave() : undefined}
               /> :
               <Image 
                   src='/assets/icons/star-red.svg'
@@ -171,7 +178,7 @@ const Votes = ({
                   height={25}
                   width={25}
                   className="cursor-pointer pl-2"
-                  onClick={() => handleSave()}
+                  onClick={!isDisabled ? () => handleSave() : undefined}
               />  : <></>
             }
             

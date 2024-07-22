@@ -90,7 +90,7 @@ const Page = async({ params, searchParams}: URLProps) => {
                         <QuestionTab 
                             searchParams={searchParams}
                             userId={userInfo.user._id}
-                            clerkId={userInfo.user.clerkId}
+                            clerkId={clerkId}
                         />
                     </TabsContent>
                     <TabsContent value="answers">

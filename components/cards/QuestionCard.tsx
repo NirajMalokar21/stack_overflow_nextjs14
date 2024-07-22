@@ -8,7 +8,7 @@ import EditDeleteAction from '../shared/EditDeleteAction'
 import { SignedIn } from '@clerk/nextjs'
 
 interface QuestionProps {
-  clerkId: string
+  clerkId?: string | null
   _id: string,
   title: string,
   tags: {
@@ -37,7 +37,6 @@ const QuestionCard = ( {
   answers,
   views,
   createdAt,
-
 }: QuestionProps) => {
   const showActionButtons = clerkId && clerkId === user.clerkId
   return (
