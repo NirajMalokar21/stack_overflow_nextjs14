@@ -21,6 +21,15 @@ const Page = async({ params, searchParams}: any) => {
         mongoUser = await getUserById({ userId: clerkId })
     }
 
+    if (!result || !result.author || !mongoUser) {
+        return (
+            <div className="pt-28">
+                <h1 className="h1-bold text-dark100_light900">Error</h1>
+                <p>Unable to load the question or user data.</p>
+            </div>
+        );
+    }
+
     return (
         <>
             <div className="flex-start w-full flex-row justify-between py-4 pt-28">
