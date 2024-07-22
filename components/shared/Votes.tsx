@@ -13,7 +13,7 @@ import { toast } from '../ui/use-toast';
 interface Props {
     type: string;
     itemId: string;
-    userId: string;
+    userId?: string;
     upvotes: number;
     hasupVoted: boolean;
     downvotes: number;
@@ -33,8 +33,16 @@ const Votes = ({
 }: Props) => {
     const pathname = usePathname()
     const router = useRouter()
+
+    
     
     const handleSave = async () => {
+      if(!userId) {
+        return toast({
+          title: 'Please log in!',
+          description: 'You need to log in to do this action'
+        });
+      }
       await toggleSaveQuestion({
         userId: JSON.parse(userId),
         questionId: JSON.parse(itemId),

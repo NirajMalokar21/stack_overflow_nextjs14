@@ -18,7 +18,7 @@ import { toast } from '../ui/use-toast'
 interface Props {
     question: string;
     questionId: string;
-    authorId: string;
+    authorId?: string;
 }
 
 const Answer = ({ question, questionId, authorId}: Props) => {
@@ -37,6 +37,12 @@ const Answer = ({ question, questionId, authorId}: Props) => {
     setIsSubmitting(true)
 
     try {
+        if(!authorId){
+            return toast({
+                title: 'Please log in!',
+                description: 'You need to log in to do this action'
+            });
+        }
         await createAnswer({
             content: values.answer,
             author: JSON.parse(authorId),
@@ -62,7 +68,12 @@ const Answer = ({ question, questionId, authorId}: Props) => {
   }
 
   const generateAIAnswer = async () => {
-    if(!authorId) return;
+    if(!authorId) {
+        return toast({
+            title: 'Please log in!',
+            description: 'You need to log in to do this action'
+        });
+    };
 
     setIsSubmittingAI(true);
 
