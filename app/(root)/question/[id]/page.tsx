@@ -25,7 +25,7 @@ const Page = async({ params, searchParams}: any) => {
         return (
             <div className="pt-28">
                 <h1 className="h1-bold text-dark100_light900">Error</h1>
-                <p>Unable to load the question or user data.</p>
+                <p className="h2-bold text-dark100_light900">Please <Link href='/sign-in'>sign in</Link> or <Link href='/sign-up'>sign up</Link> to view question details</p>
             </div>
         );
     }

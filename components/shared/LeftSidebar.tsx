@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { SignedIn, SignedOut, useAuth} from '@clerk/nextjs'
+import {SignedOut, useAuth} from '@clerk/nextjs'
 import { Button } from '../ui/button'
 
 const LeftSidebar = () => {
@@ -74,23 +74,7 @@ const LeftSidebar = () => {
                         </Link>
                     </div>
                 </SignedOut>
-                <SignedIn>
-                    <div className="flex flex-col gap-3">                       
-                        <Link
-                            href='/'
-                            className={'text-dark300_light900 flex items-center justify-start gap-4 bg-transparent p-4'} 
-                        >
-                            <Image
-                                src='/assets/icons/user.svg'
-                                alt='log out'
-                                width={20}
-                                height={20}
-                                className='invert-colors'
-                            />
-                            <p className='base-medium max-lg:hidden'>Log Out</p>
-                        </Link>                
-                    </div> 
-                </SignedIn>
+
                 
         </section>
     )
