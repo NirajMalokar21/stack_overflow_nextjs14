@@ -9,7 +9,7 @@ import {
   } from "@/components/ui/sheet"
 import Image from 'next/image'
 import Link from 'next/link'
-import { SignedIn, SignedOut } from '@clerk/nextjs'
+import { SignedOut } from '@clerk/nextjs'
 import { Button } from '@/components/ui/button'
 import { sidebarLinks } from '@/constants'
 import { usePathname } from 'next/navigation'
@@ -58,18 +58,16 @@ const MobileNav = () => {
     </SheetTrigger>
     <SheetContent side='left' className='background-light900_dark200 border-none'>
         <Link href="/" className='flex items-center gap-1'>
-            <Image src="assets/images/site-logo.svg" width={23} height={23} alt="devOverflow" />
+            <Image src="/assets/images/site-logo.svg" width={23} height={23} alt="devOverflow" />
             <p className='h2-bold text-dark100_light900 dark:text-light-900'>
               Dev <span className='text-primary-500'>OverFlow</span>
             </p>
         </Link>
         <div>
-            <SignedIn>
-                <SheetClose asChild>
-                    <NavContent />
-                </SheetClose>
-            </SignedIn>
-            
+            <SheetClose asChild>
+                <NavContent />
+            </SheetClose>
+
 
             <SignedOut>
                 <div className="flex flex-col gap-3">
