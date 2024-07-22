@@ -17,6 +17,7 @@ import { profileSchema } from '@/lib/validations'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { updateUser } from '@/lib/actions/user.action'
+import { toast } from '../ui/use-toast'
 
 interface Props {
     clerkId: string;
@@ -57,6 +58,10 @@ const Profile = ({ clerkId, user }: Props) => {
         path: pathname
       })
       router.push(`/profile/${clerkId}`)
+
+      return toast({
+        title: 'Profile updated successfully!'
+      })
       
     } catch(error) {
       console.log(error)

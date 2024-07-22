@@ -22,6 +22,7 @@ import { Badge } from '../ui/badge'
 import Image from 'next/image'
 import { createQuestion, editQuestion } from '@/lib/actions/question.action'
 import { useRouter, usePathname } from 'next/navigation'
+import { toast } from '../ui/use-toast'
 
 interface Props {
   mongoUserId: string;
@@ -76,6 +77,9 @@ const Question = ({ mongoUserId, questionDetails, type }: Props) => {
   
         router.push('/')
       }
+      return toast({
+        title: 'Question posted successfully'
+      })
       
     } catch(error) {
       
