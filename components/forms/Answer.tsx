@@ -38,11 +38,13 @@ const Answer = ({ question, questionId, authorId}: Props) => {
 
     try {
         if(!authorId){
-            return toast({
+            toast({
                 title: 'Please log in!',
                 description: 'You need to log in to do this action'
             });
+            return;
         }
+
         await createAnswer({
             content: values.answer,
             author: JSON.parse(authorId),

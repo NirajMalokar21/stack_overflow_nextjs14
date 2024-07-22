@@ -33,6 +33,7 @@ interface Props {
 const Question = ({ mongoUserId, questionDetails, type }: Props) => {
   const { mode } = useTheme();
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
 
@@ -54,9 +55,11 @@ const Question = ({ mongoUserId, questionDetails, type }: Props) => {
  
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof questionSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     setIsSubmitting(true)
+    setIsDisabled(true);
+    setTimeout(() => {
+      setIsDisabled(false);
+    }, 4000);
     try{
       if(type === "Edit") {
         await editQuestion({
@@ -74,7 +77,6 @@ const Question = ({ mongoUserId, questionDetails, type }: Props) => {
           author: JSON.parse(mongoUserId),
           path: pathname
         })
-  
         router.push('/')
       }
       return toast({
@@ -82,7 +84,7 @@ const Question = ({ mongoUserId, questionDetails, type }: Props) => {
       })
       
     } catch(error) {
-      
+      console.log(error)
     } finally {
       setIsSubmitting(false)
     }
@@ -233,7 +235,7 @@ const Question = ({ mongoUserId, questionDetails, type }: Props) => {
             )}
           />
           <Button type="submit" className='primary-gradient !text-light-900 w-fit' 
-          disabled={isSubmitting}>
+          disabled={isDisabled}>
             {isSubmitting ? (
               <>
                 {type === 'Edit' ? 'Editing...' : 'Posting'}
