@@ -9,20 +9,29 @@ import {
   } from "@/components/ui/sheet"
 import Image from 'next/image'
 import Link from 'next/link'
-import { SignedOut } from '@clerk/nextjs'
+import { SignedOut, useAuth } from '@clerk/nextjs'
 import { Button } from '@/components/ui/button'
 import { sidebarLinks } from '@/constants'
 import { usePathname } from 'next/navigation'
 
 const NavContent = () => {
     const pathname = usePathname()
+    const { userId } = useAuth()
 
     return (
         <section className="flex h-full flex-col gap-6 pt-6">
             {sidebarLinks.map((item) => {
                 const isActive = (pathname.includes(item.route) && item.route.length > 1 || pathname === item.route)
+                if(item.route === '/profile') {
+                    if(userId) {
+                        item.route = `${item.route}/${userId}`
+                    } else {
+                        return null
+                    }
+                }
 
-                return (<SheetClose asChild key={item.route}>
+                return (
+                <SheetClose asChild key={item.route}>
                     <Link 
                         href={item.route}
                         className={`${isActive ? 'primary-gradient text-light-900 rounded-lg' : 'text-dark300_light900'} 
@@ -56,7 +65,7 @@ const MobileNav = () => {
             className='invert-colors sm:hidden'
         />
     </SheetTrigger>
-    <SheetContent side='left' className='background-light900_dark200 border-none'>
+    <SheetContent side='left' className='background-light900_dark200 h-full overflow-y-auto border-none'>
         <Link href="/" className='flex items-center gap-1'>
             <Image src="/assets/images/site-logo.svg" width={23} height={23} alt="devOverflow" />
             <p className='h2-bold text-dark100_light900 dark:text-light-900'>
