@@ -18,7 +18,7 @@ export async function getTopInteractedTags (params:GetTopInteractedTagsParams) {
 
         // if(!user) throw new Error("User not found")
 
-        // Create Interaction model
+        // Create Interaction
         const tags = [
             { 
                 _id: 1,

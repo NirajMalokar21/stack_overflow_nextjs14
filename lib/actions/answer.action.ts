@@ -28,9 +28,9 @@ export async function createAnswer (params: CreateAnswerParams) {
         })
     
 
-        await User.findByIdAndUpdate(author, {
-          $inc: { reputation: 10 }
-        })
+        // await User.findByIdAndUpdate(author, {
+        //   $inc: { reputation: 10 }
+        // })
         
         await answer.save()
         revalidatePath(path)
@@ -127,13 +127,13 @@ export async function upvoteAnswer (params: AnswerVoteParams) {
         }
     
         // Increment author's reputation
-        await User.findByIdAndUpdate(userId, {
-          $inc: { reputation: hasupVoted ? -2 : 2}
-        })
+        // await User.findByIdAndUpdate(userId, {
+        //   $inc: { reputation: hasupVoted ? -2 : 2}
+        // })
 
-        await User.findByIdAndUpdate(answer.author, {
-          $inc: { reputation: hasupVoted ? -10 : 10}
-        })
+        // await User.findByIdAndUpdate(answer.author, {
+        //   $inc: { reputation: hasupVoted ? -10 : 10}
+        // })
     
         revalidatePath(path);
       } catch (error) {
@@ -168,13 +168,13 @@ export async function downvoteAnswer (params: AnswerVoteParams) {
         }
     
         // Increment author's reputation
-        await User.findByIdAndUpdate(userId, {
-          $inc: { reputation: hasdownVoted ? -2 : 2}
-        })
+        // await User.findByIdAndUpdate(userId, {
+        //   $inc: { reputation: hasdownVoted ? -2 : 2}
+        // })
 
-        await User.findByIdAndUpdate(answer.author, {
-          $inc: { reputation: hasdownVoted ? -10 : 10}
-        })
+        // await User.findByIdAndUpdate(answer.author, {
+        //   $inc: { reputation: hasdownVoted ? -10 : 10}
+        // })
     
         revalidatePath(path);
       } catch (error) {

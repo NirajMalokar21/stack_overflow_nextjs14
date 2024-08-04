@@ -44,7 +44,7 @@ export async function getUsers(params: GetAllUsersParams) {
                     sortOptions = { joinDate: 1 };
                     break;
                 case "top_contributors":
-                    sortOptions = { reputation: -1}
+                    sortOptions = { joinDate: -1}
             }
 
         }
